@@ -12,6 +12,8 @@ let mouseIsPressed = false;
 // Global Variables (Reset)
 let state;
 let mode;
+let lvl;
+let KeyW, KeyS, KeyA, KeyD, Space, Enter;
 reset();
 
 // Draw Function
@@ -21,7 +23,10 @@ function draw() {
   if (state === "start") {
     drawStart();
   } else if (state === "gameon") {
+    runGame();
     if (mode === "lvlSelect") {
+
+    } else {
 
     }
   } else if (state === "gameover") {
@@ -36,6 +41,7 @@ function draw() {
 document.addEventListener("mousedown", mousedownHandler);
 document.addEventListener("mouseup", mouseupHandler);
 document.addEventListener("keydown", keydownHandler);
+document.addEventListener("keyup", keyupHandler);
 
 function mousedownHandler() {
   mouseIsPressed = true;
@@ -47,20 +53,36 @@ function mouseupHandler() {
 
 function keydownHandler(event) {
   if (event.code === "KeyW") {
-
+    KeyW = true;
   } else if (event.code === "KeyS") {
-
+    KeyS = true;
   } else if (event.code === "KeyD") {
-
+    KeyD = true;
   } else if (event.code === "KeyA") {
-
+    KeyA = true;
   } else if (event.code === "Space") {
-    
+    Space = true;
   } else if (event.code === "Enter") {
-    console.log("Enter");
+    Enter = true;
 
     if (state === "start") {
       state = "gameon";
     }
+  }
+}
+
+function keyupHandler(event) {
+  if (event.code === "KeyW") {
+    KeyW = false;
+  } else if (event.code === "KeyS") {
+    KeyS = false;
+  } else if (event.code === "KeyD") {
+    KeyD = false;
+  } else if (event.code === "KeyA") {
+    KeyA = false;
+  } else if (event.code === "Space") {
+    Space = false;
+  } else if (event.code === "Enter") {
+    Enter = false;
   }
 }
