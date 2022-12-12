@@ -13,7 +13,11 @@ let mouseIsPressed = false;
 let state;
 let mode;
 let lvl;
+let numLvls;
+let selector;
+let spamBoy;
 let KeyW, KeyS, KeyA, KeyD, Space, Enter;
+let floor1, floor2, wall1, wall2, wall3, wall4;
 reset();
 
 // Draw Function
@@ -45,6 +49,10 @@ document.addEventListener("keyup", keyupHandler);
 
 function mousedownHandler() {
   mouseIsPressed = true;
+
+  if (state === "start") {
+    state = "gameon";
+  }
 }
 
 function mouseupHandler() {
@@ -64,10 +72,6 @@ function keydownHandler(event) {
     Space = true;
   } else if (event.code === "Enter") {
     Enter = true;
-
-    if (state === "start") {
-      state = "gameon";
-    }
   }
 }
 

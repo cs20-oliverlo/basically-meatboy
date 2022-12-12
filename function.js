@@ -6,7 +6,7 @@ function drawStart() {
   // Start Text
   ctx.font = "50px meat-boy-font";
   ctx.fillStyle = "white";
-  ctx.fillText("Press Enter to Start", 225, 350)
+  ctx.fillText("Click to Start", 315, 350)
 }
 
 function runGame() {
@@ -16,20 +16,62 @@ function runGame() {
     if (lvl === "lvl1") {
       drawLevel1();
     } else if (lvl === "lvl2") {
-      
+      drawLevel2();
     } else if (lvl === " lvl3") {
-
+      drawLevel3();
     } else {
-
+      drawLevel4();
     }
   } else {
     lvlSelectControls();
+    drawLevelSelector();
 
   }
 }
 
 function drawLevel1() {
+  // Background
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
+}
+
+function drawLevel2() {
   
+}
+
+function drawLevel3() {
+  
+}
+
+function drawLevel4() {
+  
+}
+
+function drawLevelSelector() {
+  // Background
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
+
+  let x = cnv.width / (numLvls + 1);
+  let y = cnv.height / 2 - 10;
+
+  // Levels
+  for (i = 0; i < numLvls; i++) {
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(x, y, selector.w, selector.h);
+
+    ctx.font = "50px meat-boy-font";
+    ctx.fillStyle = "white";
+    ctx.fillText(`${i + 1}`, x + 7, y + 40)
+
+    x += cnv.width / (numLvls + 1);
+  }
+
+  // Selector
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 4;
+  ctx.strokeRect(selector.x, selector.y, selector.w, selector.h);
 }
 
 function gamingControls() {
@@ -51,21 +93,42 @@ function gamingControls() {
 function lvlSelectControls() {
   if (KeyW === true) {
 
+    KeyW = false;
   } else if (KeyS === true) {
 
+    KeyS = false;
   } else if (KeyD === true) {
+    selector.x += cnv.width / (numLvls + 1);
 
+    if (selector.x > cnv.width * numLvls / (numLvls + 1)) {
+      selector.x = cnv.width / (numLvls + 1);
+    }
+
+    KeyD = false;
   } else if (KeyA === true) {
+    selector.x -= cnv.width / (numLvls + 1);
 
+    if (selector.x < cnv.width / (numLvls + 1)) {
+      selector.x = cnv.width * numLvls / (numLvls + 1);
+    }
+
+    KeyA = false;
   } else if (Space === true) {
+    // if on lvl1-4, set lvl variable to that lvl
+    loadLevelValues();
+    mode = "game";
 
+    Space = false;
   } else if (Enter === true) {
     // if on lvl1-4, set lvl variable to that lvl
-    loadLevel();
+    loadLevelValues();
+    mode = "game";
   }
+
+  Enter = false;
 }
 
-function loadLevel() {
+function loadLevelValues() {
   if (lvl === "lvl1") {
     // floor1 = {
     //   x: ,
@@ -103,6 +166,12 @@ function loadLevel() {
     //   w: ,
     //   h: 
     // };
+  } else if (lvl === "lvl2") {
+
+  } else if (lvl === "lvl3") {
+
+  } else {
+
   }
 }
 
@@ -110,5 +179,19 @@ function reset() {
   state = "start";
   mode = "lvlSelect";
   lvl = "lvl1";
-  let floor1, floor2, wall1, wall2, wall3, wall4;
+  numLvls = 4;
+  selector = {
+    x: cnv.width / (numLvls + 1),
+    y: 350,
+    w: 50,
+    h: 50
+  };
+  spamBoy = {
+    x: 530,
+    y: 350,
+    w: 10,
+    h: 10,
+    speed: 0,
+    accel: -0.5
+  };
 }
