@@ -12,6 +12,7 @@ function drawStart() {
 function runGame() {
   if (mode === "game") {
     gamingControls();
+    // collisions();
 
     if (lvl === "lvl1") {
       drawLevel1();
@@ -31,12 +32,20 @@ function runGame() {
 
 function drawLevel1() {
   // Background
-  ctx.fillStyle = "black";
+  ctx.fillStyle = `rgb(${background.r}, ${background.g}, ${background.b})`;
   ctx.fillRect(0, 0, cnv.width, cnv.height);
+
+  // Floor1
+  ctx.fillStyle = `rgb(${floor1.r}, ${floor1.g}, ${floor1.b})`;
+  ctx.fillRect(floor1.x, floor1.y, floor1.w, floor1.h);
+
+  // Spam Boy
+  ctx.fillStyle = `rgb(${spamBoy.r}, ${spamBoy.g}, ${spamBoy.b})`;
+  ctx.fillRect(spamBoy.x, spamBoy.y, spamBoy.w, spamBoy.h);
 }
 
 function drawLevel2() {
-  
+
 }
 
 function drawLevel3() {
@@ -76,18 +85,51 @@ function drawLevelSelector() {
 
 function gamingControls() {
   if (KeyW === true) {
+    // spamBoy.x += 5;
+    // spamBoy.y -= 15;
+    // spamBoy.w -= 10;
+    // spamBoy.h += 15;
 
+    // if (spamBoy.x > 530) {
+    //   spamBoy.x = 530;
+    //   spamBoy.y = 450;
+    //   spamBoy.w = 20;
+    //   spamBoy.h = 20;
+    // }
   } else if (KeyS === true) {
+    // spamBoy.x -= 5;
+    // spamBoy.y += 15;
+    // spamBoy.w += 10;
+    // spamBoy.h -= 15;
 
+    // if (spamBoy.x < 525) {
+    //   spamBoy.x = 525;
+    //   spamBoy.y = 465;
+    //   spamBoy.w = 30;
+    //   spamBoy.h = 5;
+    // }
   } else if (KeyD === true) {
-
+    floor1.x -= 5;
   } else if (KeyA === true) {
-
+    floor1.x += 5;
   } else if (Space === true) {
-
+    spamBoy.ySpeed += 15;
   } else if (Enter === true) {
 
   }
+
+  // Max and Min Jump and Fall Speed (Spam Boy)
+  if (spamBoy.ySpeed > 15) {
+    spamBoy.ySpeed = 15;
+  } else if (spamBoy.ySpeed < -10) {
+    spamBoy.ySpeed = -10;
+  }
+
+  // Apply Gravity
+  spamBoy.ySpeed += spamBoy.yAccel;
+
+  // Move floors, walls, etc by Spam Boy's speed
+  floor1.y += spamBoy.ySpeed;
 }
 
 function lvlSelectControls() {
@@ -114,28 +156,54 @@ function lvlSelectControls() {
 
     KeyA = false;
   } else if (Space === true) {
-    // if on lvl1-4, set lvl variable to that lvl
+    if (selector.x === cnv.width * 1 / (numLvls + 1)) {
+      lvl = "lvl1";
+    } else if (selector.x === cnv.width * 2 / (numLvls + 1)) {
+      lvl = "lvl2";
+    } else if (selector.x === cnv.width * 3 / (numLvls + 1)) {
+      lvl = "lvl3";
+    } else {
+      lvl = "lvl4";
+    }
+
     loadLevelValues();
     mode = "game";
-
     Space = false;
   } else if (Enter === true) {
-    // if on lvl1-4, set lvl variable to that lvl
+    if (selector.x === cnv.width * 1 / (numLvls + 1)) {
+      lvl = "lvl1";
+    } else if (selector.x === cnv.width * 2 / (numLvls + 1)) {
+      lvl = "lvl2";
+    } else if (selector.x === cnv.width * 3 / (numLvls + 1)) {
+      lvl = "lvl3";
+    } else {
+      lvl = "lvl4";
+    }
+
     loadLevelValues();
     mode = "game";
+    Enter = false;
   }
 
-  Enter = false;
+
 }
 
 function loadLevelValues() {
   if (lvl === "lvl1") {
-    // floor1 = {
-    //   x: ,
-    //   y: ,
-    //   w: ,
-    //   h: 
-    // };
+    background = {
+      r: 54,
+      g: 16,
+      b: 16
+    };
+    floor1 = {
+      x: 0,
+      y: 470,
+      w: 1080,
+      h: 250,
+      r: 30,
+      g: 30,
+      b: 30
+    };
     // floor2 = {
     //   x: ,
     //   y: ,
@@ -166,6 +234,17 @@ function loadLevelValues() {
     //   w: ,
     //   h: 
     // };
+    spamBoy = {
+      x: 530,
+      y: 450,
+      w: 20,
+      h: 20,
+      r: 219,
+      g: 136,
+      b: 155,
+      ySpeed: 0,
+      yAccel: -0.5
+    };
   } else if (lvl === "lvl2") {
 
   } else if (lvl === "lvl3") {
@@ -185,13 +264,5 @@ function reset() {
     y: 350,
     w: 50,
     h: 50
-  };
-  spamBoy = {
-    x: 530,
-    y: 350,
-    w: 10,
-    h: 10,
-    speed: 0,
-    accel: -0.5
   };
 }
