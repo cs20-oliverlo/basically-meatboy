@@ -12,7 +12,7 @@ function drawStart() {
 function runGame() {
   if (mode === "game") {
     gamingControls();
-    // collisions();
+    checkCollisions();
 
     if (lvl === "lvl1") {
       drawLevel1();
@@ -38,6 +38,10 @@ function drawLevel1() {
   // Floor1
   ctx.fillStyle = `rgb(${floor1.r}, ${floor1.g}, ${floor1.b})`;
   ctx.fillRect(floor1.x, floor1.y, floor1.w, floor1.h);
+
+  // Wall1
+  // ctx.fillStyle = `rgb(${wall1.r}, ${wall1.g}, ${wall1.b})`;
+  // ctx.fillRect(wall1.x, wall1.y, wall1.w, wall1.h);
 
   // Spam Boy
   ctx.fillStyle = `rgb(${spamBoy.r}, ${spamBoy.g}, ${spamBoy.b})`;
@@ -85,36 +89,50 @@ function drawLevelSelector() {
 
 function gamingControls() {
   if (KeyW === true) {
-    // spamBoy.x += 5;
-    // spamBoy.y -= 15;
-    // spamBoy.w -= 10;
-    // spamBoy.h += 15;
 
-    // if (spamBoy.x > 530) {
-    //   spamBoy.x = 530;
-    //   spamBoy.y = 450;
-    //   spamBoy.w = 20;
-    //   spamBoy.h = 20;
-    // }
-  } else if (KeyS === true) {
-    // spamBoy.x -= 5;
-    // spamBoy.y += 15;
-    // spamBoy.w += 10;
-    // spamBoy.h -= 15;
+  }
+  
+  if (KeyS === true) {
+    spamBoy.x -= 5;
+    spamBoy.y += 15;
+    spamBoy.w += 10;
+    spamBoy.h -= 15;
 
-    // if (spamBoy.x < 525) {
-    //   spamBoy.x = 525;
-    //   spamBoy.y = 465;
-    //   spamBoy.w = 30;
-    //   spamBoy.h = 5;
-    // }
-  } else if (KeyD === true) {
+    if (spamBoy.x < 525) {
+      spamBoy.x = 525;
+      spamBoy.y = 465;
+      spamBoy.w = 30;
+      spamBoy.h = 5;
+    } 
+  } else {
+    spamBoy.x += 5;
+    spamBoy.y -= 15;
+    spamBoy.w -= 10;
+    spamBoy.h += 15;
+
+    if (spamBoy.x > 530) {
+      spamBoy.x = 530;
+      spamBoy.y = 450;
+      spamBoy.w = 20;
+      spamBoy.h = 20;
+    }
+  }
+  
+  if (KeyD === true) {
     floor1.x -= 5;
-  } else if (KeyA === true) {
+    wall1.x -= 5;
+  }
+  
+  if (KeyA === true) {
     floor1.x += 5;
-  } else if (Space === true) {
+    wall1.x += 5;
+  }
+  
+  if (Space === true) {
     spamBoy.ySpeed += 15;
-  } else if (Enter === true) {
+  } 
+  
+  if (Enter === true) {
 
   }
 
@@ -130,16 +148,21 @@ function gamingControls() {
 
   // Move floors, walls, etc by Spam Boy's speed
   floor1.y += spamBoy.ySpeed;
+  wall1.y += spamBoy.ySpeed;
 }
 
 function lvlSelectControls() {
   if (KeyW === true) {
 
     KeyW = false;
-  } else if (KeyS === true) {
+  }
+  
+  if (KeyS === true) {
 
     KeyS = false;
-  } else if (KeyD === true) {
+  }
+  
+  if (KeyD === true) {
     selector.x += cnv.width / (numLvls + 1);
 
     if (selector.x > cnv.width * numLvls / (numLvls + 1)) {
@@ -147,7 +170,9 @@ function lvlSelectControls() {
     }
 
     KeyD = false;
-  } else if (KeyA === true) {
+  }
+  
+  if (KeyA === true) {
     selector.x -= cnv.width / (numLvls + 1);
 
     if (selector.x < cnv.width / (numLvls + 1)) {
@@ -155,7 +180,9 @@ function lvlSelectControls() {
     }
 
     KeyA = false;
-  } else if (Space === true) {
+  }
+  
+  if (Space === true) {
     if (selector.x === cnv.width * 1 / (numLvls + 1)) {
       lvl = "lvl1";
     } else if (selector.x === cnv.width * 2 / (numLvls + 1)) {
@@ -169,7 +196,9 @@ function lvlSelectControls() {
     loadLevelValues();
     mode = "game";
     Space = false;
-  } else if (Enter === true) {
+  }
+  
+  if (Enter === true) {
     if (selector.x === cnv.width * 1 / (numLvls + 1)) {
       lvl = "lvl1";
     } else if (selector.x === cnv.width * 2 / (numLvls + 1)) {
@@ -184,8 +213,15 @@ function lvlSelectControls() {
     mode = "game";
     Enter = false;
   }
+}
 
-
+function checkCollisions() {
+  if (spamBoy.x > floor1.x - floor1.w && spamBoy.x < floor1.x + floor1.w && spamBoy.y > floor1.y - floor1.h && spamBoy.y < floor1.y + floor1.h) {
+    spamBoy.ySpeed = spamBoy.ySpeed * -1;
+    console.log(floor1.y);
+  } else {
+    spa
+  }
 }
 
 function loadLevelValues() {
@@ -210,12 +246,15 @@ function loadLevelValues() {
     //   w: ,
     //   h: 
     // };
-    // wall1 = {
-    //   x: ,
-    //   y: ,
-    //   w: ,
-    //   h: 
-    // };
+    wall1 = {
+      x: 515,
+      y: 355,
+      w: 50,
+      h: 50,
+      r: 30,
+      g: 30,
+      b: 30
+    };
     // wall2 = {
     //   x: ,
     //   y: ,
