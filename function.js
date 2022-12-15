@@ -35,13 +35,21 @@ function drawLevel1() {
   ctx.fillStyle = `rgb(${background.r}, ${background.g}, ${background.b})`;
   ctx.fillRect(0, 0, cnv.width, cnv.height);
 
-  // Floor1
-  ctx.fillStyle = `rgb(${floor1.r}, ${floor1.g}, ${floor1.b})`;
-  ctx.fillRect(floor1.x, floor1.y, floor1.w, floor1.h);
+  // Border1
+  ctx.fillStyle = `rgb(${border1.r}, ${border1.g}, ${border1.b})`;
+  ctx.fillRect(border1.x, border1.y, border1.w, border1.h);
 
-  // Wall1
-  // ctx.fillStyle = `rgb(${wall1.r}, ${wall1.g}, ${wall1.b})`;
-  // ctx.fillRect(wall1.x, wall1.y, wall1.w, wall1.h);
+  // Border2
+  ctx.fillStyle = `rgb(${border2.r}, ${border2.g}, ${border2.b})`;
+  ctx.fillRect(border2.x, border2.y, border2.w, border2.h);
+
+  // Border3
+  ctx.fillStyle = `rgb(${border3.r}, ${border3.g}, ${border3.b})`;
+  ctx.fillRect(border3.x, border3.y, border3.w, border3.h);
+
+  // Border4
+  ctx.fillStyle = `rgb(${border4.r}, ${border4.g}, ${border4.b})`;
+  ctx.fillRect(border4.x, border4.y, border4.w, border4.h);
 
   // Spam Boy
   ctx.fillStyle = `rgb(${spamBoy.r}, ${spamBoy.g}, ${spamBoy.b})`;
@@ -93,44 +101,44 @@ function gamingControls() {
   }
   
   if (KeyS === true) {
-    spamBoy.x -= 5;
-    spamBoy.y += 15;
-    spamBoy.w += 10;
-    spamBoy.h -= 15;
+  //   spamBoy.x -= 5;
+  //   spamBoy.y += 15;
+  //   spamBoy.w += 10;
+  //   spamBoy.h -= 15;
 
-    if (spamBoy.x < 525) {
-      spamBoy.x = 525;
-      spamBoy.y = 465;
-      spamBoy.w = 30;
-      spamBoy.h = 5;
-    } 
-  } else {
-    spamBoy.x += 5;
-    spamBoy.y -= 15;
-    spamBoy.w -= 10;
-    spamBoy.h += 15;
+  //   if (spamBoy.x < 525) {
+  //     spamBoy.x = 525;
+  //     spamBoy.y = 465;
+  //     spamBoy.w = 30;
+  //     spamBoy.h = 5;
+  //   } 
+  // } else {
+  //   spamBoy.x += 5;
+  //   spamBoy.y -= 15;
+  //   spamBoy.w -= 10;
+  //   spamBoy.h += 15;
 
-    if (spamBoy.x > 530) {
-      spamBoy.x = 530;
-      spamBoy.y = 450;
-      spamBoy.w = 20;
-      spamBoy.h = 20;
-    }
+  //   if (spamBoy.x > 530) {
+  //     spamBoy.x = 530;
+  //     spamBoy.y = 450;
+  //     spamBoy.w = 20;
+  //     spamBoy.h = 20;
+  //   }
   }
   
   if (KeyD === true) {
-    floor1.x -= 5;
-    wall1.x -= 5;
+    spamBoy.x += spamBoy.xSpeed;
   }
   
   if (KeyA === true) {
-    floor1.x += 5;
-    wall1.x += 5;
+    spamBoy.x -= spamBoy.xSpeed;
   }
   
   if (Space === true) {
-    spamBoy.ySpeed += 15;
-  } 
+    if (spamBoy.canJump === true) {
+      spamBoy.ySpeed += -15;
+    }
+  }
   
   if (Enter === true) {
 
@@ -139,16 +147,15 @@ function gamingControls() {
   // Max and Min Jump and Fall Speed (Spam Boy)
   if (spamBoy.ySpeed > 15) {
     spamBoy.ySpeed = 15;
-  } else if (spamBoy.ySpeed < -10) {
-    spamBoy.ySpeed = -10;
+  } else if (spamBoy.ySpeed < -15) {
+    spamBoy.ySpeed = -15;
   }
 
   // Apply Gravity
-  spamBoy.ySpeed += spamBoy.yAccel;
+  spamBoy.ySpeed -= spamBoy.yAccel;
 
-  // Move floors, walls, etc by Spam Boy's speed
-  floor1.y += spamBoy.ySpeed;
-  wall1.y += spamBoy.ySpeed;
+  // Move Spam Boy
+  spamBoy.y += spamBoy.ySpeed;
 }
 
 function lvlSelectControls() {
@@ -216,11 +223,24 @@ function lvlSelectControls() {
 }
 
 function checkCollisions() {
-  if (spamBoy.x > floor1.x - floor1.w && spamBoy.x < floor1.x + floor1.w && spamBoy.y > floor1.y - floor1.h && spamBoy.y < floor1.y + floor1.h) {
-    spamBoy.ySpeed = spamBoy.ySpeed * -1;
-    console.log(floor1.y);
+  if (spamBoy.x < border3.x + border3.w) {
+    spamBoy.x = 25;
+  }
+
+  if (spamBoy.x + spamBoy.w > border4.x) {
+    spamBoy.x = 1035;
+    spamBoy.canJump = true;
   } else {
-    spa
+    spamBoy.canJump = false;
+  }
+
+  if (spamBoy.y < border1.y + border1.h) {
+    spamBoy.y = 25;
+    spamBoy.ySpeed = 0;
+  }
+
+  if (spamBoy.y + spamBoy.h > border2.y) {
+    spamBoy.y = 675;
   }
 }
 
@@ -230,6 +250,42 @@ function loadLevelValues() {
       r: 54,
       g: 16,
       b: 16
+    };
+    border1 = {
+      x: 0,
+      y: 0,
+      w: 1080,
+      h: 25,
+      r: 30,
+      g: 30,
+      b: 30
+    };
+    border2 = {
+      x: 0,
+      y: 695,
+      w: 1080,
+      h: 25,
+      r: 30,
+      g: 30,
+      b: 30
+    };
+    border3 = {
+      x: 0,
+      y: 0,
+      w: 25,
+      h: 720,
+      r: 30,
+      g: 30,
+      b: 30
+    };
+    border4 = {
+      x: 1055,
+      y: 0,
+      w: 25,
+      h: 720,
+      r: 30,
+      g: 30,
+      b: 30
     };
     floor1 = {
       x: 0,
@@ -281,8 +337,10 @@ function loadLevelValues() {
       r: 219,
       g: 136,
       b: 155,
+      xSpeed: 5,
       ySpeed: 0,
-      yAccel: -0.5
+      yAccel: -0.5,
+      canJump: false
     };
   } else if (lvl === "lvl2") {
 
