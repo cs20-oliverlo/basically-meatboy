@@ -31,29 +31,67 @@ function runGame() {
 }
 
 function drawLevel1() {
-  // Background
-  ctx.fillStyle = `rgb(${background.r}, ${background.g}, ${background.b})`;
-  ctx.fillRect(0, 0, cnv.width, cnv.height);
+  if (levelSection === 0) {
+    // Background
+    ctx.fillStyle = `rgb(${background.r}, ${background.g}, ${background.b})`;
+    ctx.fillRect(0, 0, cnv.width, cnv.height);
 
-  // Border1
-  ctx.fillStyle = `rgb(${border1.r}, ${border1.g}, ${border1.b})`;
-  ctx.fillRect(border1.x, border1.y, border1.w, border1.h);
+    // Border1
+    ctx.fillStyle = `rgb(${border1.r}, ${border1.g}, ${border1.b})`;
+    ctx.fillRect(border1.x, border1.y, border1.w, border1.h);
 
-  // Border2
-  ctx.fillStyle = `rgb(${border2.r}, ${border2.g}, ${border2.b})`;
-  ctx.fillRect(border2.x, border2.y, border2.w, border2.h);
+    // Border2
+    ctx.fillStyle = `rgb(${border2.r}, ${border2.g}, ${border2.b})`;
+    ctx.fillRect(border2.x, border2.y, border2.w, border2.h);
 
-  // Border3
-  ctx.fillStyle = `rgb(${border3.r}, ${border3.g}, ${border3.b})`;
-  ctx.fillRect(border3.x, border3.y, border3.w, border3.h);
+    // Border3
+    ctx.fillStyle = `rgb(${border3.r}, ${border3.g}, ${border3.b})`;
+    ctx.fillRect(border3.x, border3.y, border3.w, border3.h);
 
-  // Border4
-  ctx.fillStyle = `rgb(${border4.r}, ${border4.g}, ${border4.b})`;
-  ctx.fillRect(border4.x, border4.y, border4.w, border4.h);
+    // Border4
+    ctx.fillStyle = `rgb(${border4.r}, ${border4.g}, ${border4.b})`;
+    ctx.fillRect(border4.x, border4.y, border4.w, border4.h);
 
-  // Spam Boy
-  ctx.fillStyle = `rgb(${spamBoy.r}, ${spamBoy.g}, ${spamBoy.b})`;
-  ctx.fillRect(spamBoy.x, spamBoy.y, spamBoy.w, spamBoy.h);
+    // Floor1
+    ctx.fillStyle = `rgb(${floor1.r}, ${floor1.g}, ${floor1.b})`;
+    ctx.fillRect(floor1.x, floor1.y, floor1.w, floor1.h);
+
+    // // Wall1
+    // ctx.fillStyle = `rgb(${wall1.r}, ${wall1.g}, ${wall1.b})`;
+    // ctx.fillRect(wall1.x, wall1.y, wall1.w, wall1.h);
+
+    // // Wall2
+    // ctx.fillStyle = `rgb(${wall2.r}, ${wall2.g}, ${wall2.b})`;
+    // ctx.fillRect(wall2.x, wall2.y, wall2.w, wall2.h);
+
+    // // Floor2
+    // ctx.fillStyle = `rgb(${floor2.r}, ${floor2.g}, ${floor2.b})`;
+    // ctx.fillRect(floor2.x, floor2.y, floor2.w, floor2.h);
+
+    // Spikes
+
+    // Arrow
+
+    // Spam Boy
+    ctx.fillStyle = `rgb(${spamBoy.r}, ${spamBoy.g}, ${spamBoy.b})`;
+    ctx.fillRect(spamBoy.x, spamBoy.y, spamBoy.w, spamBoy.h);
+  } else if (levelSection === 1) {
+    // Flag
+    ctx.fillStyle = `rgb(${flag.r1}, ${flag.g1}, ${flag.b1})`;
+    ctx.beginPath();
+    ctx.moveTo(flag.x1, flag.y1);
+    ctx.lineTo(flag.x2, flag.y2);
+    ctx.lineTo(flag.x3, flag.y3);
+    ctx.fill();
+
+    // Pole
+    ctx.lineWidth = flag.w;
+    ctx.strokeStyle = `rgb(${flag.r2}, ${flag.g2}, ${flag.b2})`;
+    ctx.beginPath();
+    ctx.moveTo(flag.x1, flag.y1);
+    ctx.lineTo(flag.x1, flag.y4);
+    ctx.stroke();
+  }
 }
 
 function drawLevel2() {
@@ -101,29 +139,7 @@ function gamingControls() {
   }
   
   if (KeyS === true) {
-  //   spamBoy.x -= 5;
-  //   spamBoy.y += 15;
-  //   spamBoy.w += 10;
-  //   spamBoy.h -= 15;
-
-  //   if (spamBoy.x < 525) {
-  //     spamBoy.x = 525;
-  //     spamBoy.y = 465;
-  //     spamBoy.w = 30;
-  //     spamBoy.h = 5;
-  //   } 
-  // } else {
-  //   spamBoy.x += 5;
-  //   spamBoy.y -= 15;
-  //   spamBoy.w -= 10;
-  //   spamBoy.h += 15;
-
-  //   if (spamBoy.x > 530) {
-  //     spamBoy.x = 530;
-  //     spamBoy.y = 450;
-  //     spamBoy.w = 20;
-  //     spamBoy.h = 20;
-  //   }
+    // Add Ducking
   }
   
   if (KeyD === true) {
@@ -229,9 +245,6 @@ function checkCollisions() {
 
   if (spamBoy.x + spamBoy.w > border4.x) {
     spamBoy.x = 1035;
-    spamBoy.canJump = true;
-  } else {
-    spamBoy.canJump = false;
   }
 
   if (spamBoy.y < border1.y + border1.h) {
@@ -241,6 +254,9 @@ function checkCollisions() {
 
   if (spamBoy.y + spamBoy.h > border2.y) {
     spamBoy.y = 675;
+    spamBoy.canJump = true;
+  } else {
+    spamBoy.canJump = false;
   }
 }
 
@@ -256,52 +272,55 @@ function loadLevelValues() {
       y: 0,
       w: 1080,
       h: 25,
-      r: 30,
-      g: 30,
-      b: 30
+      r: 10,
+      g: 10,
+      b: 10
     };
     border2 = {
       x: 0,
       y: 695,
       w: 1080,
       h: 25,
-      r: 30,
-      g: 30,
-      b: 30
+      r: 10,
+      g: 10,
+      b: 10
     };
     border3 = {
       x: 0,
       y: 0,
       w: 25,
       h: 720,
-      r: 30,
-      g: 30,
-      b: 30
+      r: 10,
+      g: 10,
+      b: 10
     };
     border4 = {
       x: 1055,
       y: 0,
       w: 25,
       h: 720,
+      r: 10,
+      g: 10,
+      b: 10
+    };
+    floor1 = {
+      x: 25,
+      y: 200,
+      w: 800,
+      h: 25,
       r: 30,
       g: 30,
       b: 30
     };
-    floor1 = {
+    floor2 = {
       x: 0,
-      y: 470,
-      w: 1080,
+      y: 0,
+      w: 100,
       h: 250,
       r: 30,
       g: 30,
       b: 30
     };
-    // floor2 = {
-    //   x: ,
-    //   y: ,
-    //   w: ,
-    //   h: 
-    // };
     wall1 = {
       x: 515,
       y: 355,
@@ -311,12 +330,15 @@ function loadLevelValues() {
       g: 30,
       b: 30
     };
-    // wall2 = {
-    //   x: ,
-    //   y: ,
-    //   w: ,
-    //   h: 
-    // };
+    wall2 = {
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0,
+      r: 30,
+      g: 30,
+      b: 30
+    };
     // wall3 = {
     //   x: ,
     //   y: ,
@@ -329,6 +351,22 @@ function loadLevelValues() {
     //   w: ,
     //   h: 
     // };
+    flag = {
+      x1: 100,
+      y1: 500,
+      x2: 100,
+      y2: 525,
+      x3: 125,
+      y3: 513,
+      y4: 550,
+      r1: 0,
+      g1: 250,
+      b1: 0,
+      r2: 0,
+      g2: 0,
+      b2: 0,
+      w: 5 
+    };
     spamBoy = {
       x: 530,
       y: 450,
@@ -342,6 +380,7 @@ function loadLevelValues() {
       yAccel: -0.5,
       canJump: false
     };
+    levelSection = 0;
   } else if (lvl === "lvl2") {
 
   } else if (lvl === "lvl3") {
