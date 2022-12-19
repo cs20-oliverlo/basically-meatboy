@@ -56,9 +56,9 @@ function drawLevel1() {
     ctx.fillStyle = `rgb(${floor1.r}, ${floor1.g}, ${floor1.b})`;
     ctx.fillRect(floor1.x, floor1.y, floor1.w, floor1.h);
 
-    // // Wall1
-    // ctx.fillStyle = `rgb(${wall1.r}, ${wall1.g}, ${wall1.b})`;
-    // ctx.fillRect(wall1.x, wall1.y, wall1.w, wall1.h);
+    // Wall1
+    ctx.fillStyle = `rgb(${wall1.r}, ${wall1.g}, ${wall1.b})`;
+    ctx.fillRect(wall1.x, wall1.y, wall1.w, wall1.h);
 
     // // Wall2
     // ctx.fillStyle = `rgb(${wall2.r}, ${wall2.g}, ${wall2.b})`;
@@ -258,6 +258,17 @@ function checkCollisions() {
   } else {
     spamBoy.canJump = false;
   }
+
+  // Fix this
+  if (spamBoy.x < wall1.x + wall1.w && spamBoy.x > wall1.x && spamBoy.y < wall1.y + wall1.h && spamBoy.y + spamBoy.h> wall1.y) {
+    spamBoy.x = wall1.x + wall1.w;
+  } else if (spamBoy.x + spamBoy.w > wall1.x && spamBoy.x + spamBoy.w < wall1.x + wall1.w &&spamBoy.y < wall1.y + wall1.h && spamBoy.y + spamBoy.h> wall1.y) {
+    spamBoy.x = wall1.x - spamBoy.w;
+  }
+
+  if (spamBoy.y + spamBoy.h > wall1.y && spamBoy.y + spamBoy.h < wall1.y + wall1.h && spamBoy.x < wall1.x + wall1.w && spamBoy.x + spamBoy.w > wall1.x) {
+    spamBoy.y = wall1.y - spamBoy.h;
+  }
 }
 
 function loadLevelValues() {
@@ -323,9 +334,9 @@ function loadLevelValues() {
     };
     wall1 = {
       x: 515,
-      y: 355,
+      y: 555,
       w: 50,
-      h: 50,
+      h: 100,
       r: 30,
       g: 30,
       b: 30
