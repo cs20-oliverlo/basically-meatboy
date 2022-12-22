@@ -69,12 +69,21 @@ function drawLevel1() {
     ctx.fillRect(floor2.x, floor2.y, floor2.w, floor2.h);
 
     // Spike1
-    ctx.fillStyle = `rgb(${spike1.r}, ${spike1.g}, ${spike1.b})`;
-    ctx.beginPath();
-    ctx.moveTo(spike1.x1, spike1.y1);
-    ctx.lineTo(spike1.x2, spike1.y2);
-    ctx.lineTo(spike1.x3, spike1.y3);
-    ctx.fill();
+    spike1.x1 = 330;
+    spike1.x2 = 305;
+    spike1.x3 = 355;
+
+    for (let i = 0; i < 4; i++) {
+      ctx.fillStyle = `rgb(${spike1.r}, ${spike1.g}, ${spike1.b})`;
+      ctx.beginPath();
+      ctx.moveTo(spike1.x1, spike1.y1);
+      ctx.lineTo(spike1.x2, spike1.y2);
+      ctx.lineTo(spike1.x3, spike1.y3);
+      ctx.fill()
+      spike1.x1 += spike1.xAdder;
+      spike1.x2 += spike1.xAdder;
+      spike1.x3 += spike1.xAdder;
+    }
 
     // Arrow
 
@@ -167,8 +176,8 @@ function gamingControls() {
   }
 
   // Spam Boy xSpeed Cap
-  if (spamBoy.xSpeed > 9.5) {
-    spamBoy.xSpeed = 9.5;
+  if (spamBoy.xSpeed > spamBoy.xSpeedMax - 0.5) {
+    spamBoy.xSpeed = spamBoy.xSpeedMax - 0.5;
   } else if (spamBoy.xSpeed < 5) {
     spamBoy.xSpeed = 5;
   }
@@ -282,11 +291,11 @@ function checkCollisions() {
   }
 
   // Floor1
-  if (spamBoy.y + spamBoy.h > floor1.y && spamBoy.y + spamBoy.h < floor1.y + floor1.h && spamBoy.x < floor1.x + floor1.w - 10 && spamBoy.x + spamBoy.w > floor1.x + 10) {
+  if (spamBoy.y + spamBoy.h > floor1.y && spamBoy.y + spamBoy.h < floor1.y + floor1.h && spamBoy.x < floor1.x + floor1.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > floor1.x + spamBoy.xSpeedMax) {
     spamBoy.y = floor1.y - spamBoy.h;
     spamBoy.canJump = true;
     spamBoy.ySpeed = 0;
-  } else if (spamBoy.y < floor1.y + floor1.h && spamBoy.y > floor1.y && spamBoy.x < floor1.x + floor1.w - 10 && spamBoy.x + spamBoy.w > floor1.x + 10) {
+  } else if (spamBoy.y < floor1.y + floor1.h && spamBoy.y > floor1.y && spamBoy.x < floor1.x + floor1.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > floor1.x + spamBoy.xSpeedMax) {
     spamBoy.y = floor1.y + floor1.h;
     spamBoy.ySpeed = 0;
   } else if (spamBoy.x < floor1.x + floor1.w && spamBoy.x > floor1.x && spamBoy.y < floor1.y + floor1.h && spamBoy.y + spamBoy.h> floor1.y) {
@@ -296,11 +305,11 @@ function checkCollisions() {
   }
 
   // floor2
-  if (spamBoy.y + spamBoy.h > floor2.y && spamBoy.y + spamBoy.h < floor2.y + floor2.h && spamBoy.x < floor2.x + floor2.w - 10 && spamBoy.x + spamBoy.w > floor2.x + 10) {
+  if (spamBoy.y + spamBoy.h > floor2.y && spamBoy.y + spamBoy.h < floor2.y + floor2.h && spamBoy.x < floor2.x + floor2.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > floor2.x + spamBoy.xSpeedMax) {
     spamBoy.y = floor2.y - spamBoy.h;
     spamBoy.canJump = true;
     spamBoy.ySpeed = 0;
-  } else if (spamBoy.y < floor2.y + floor2.h && spamBoy.y > floor2.y && spamBoy.x < floor2.x + floor2.w - 10 && spamBoy.x + spamBoy.w > floor2.x + 10) {
+  } else if (spamBoy.y < floor2.y + floor2.h && spamBoy.y > floor2.y && spamBoy.x < floor2.x + floor2.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > floor2.x + spamBoy.xSpeedMax) {
     spamBoy.y = floor2.y + floor2.h;
     spamBoy.ySpeed = 0;
   } else if (spamBoy.x < floor2.x + floor2.w && spamBoy.x > floor2.x && spamBoy.y < floor2.y + floor2.h && spamBoy.y + spamBoy.h> floor2.y) {
@@ -310,11 +319,11 @@ function checkCollisions() {
   }
 
   // Wall1
-  if (spamBoy.y + spamBoy.h > wall1.y && spamBoy.y + spamBoy.h < wall1.y + wall1.h && spamBoy.x < wall1.x + wall1.w - 10 && spamBoy.x + spamBoy.w > wall1.x + 10) {
+  if (spamBoy.y + spamBoy.h > wall1.y && spamBoy.y + spamBoy.h < wall1.y + wall1.h && spamBoy.x < wall1.x + wall1.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > wall1.x + spamBoy.xSpeedMax) {
     spamBoy.y = wall1.y - spamBoy.h;
     spamBoy.canJump = true;
     spamBoy.ySpeed = 0;
-  } else if (spamBoy.y < wall1.y + wall1.h && spamBoy.y > wall1.y && spamBoy.x < wall1.x + wall1.w - 10 && spamBoy.x + spamBoy.w > wall1.x + 10) {
+  } else if (spamBoy.y < wall1.y + wall1.h && spamBoy.y > wall1.y && spamBoy.x < wall1.x + wall1.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > wall1.x + spamBoy.xSpeedMax) {
     spamBoy.y = wall1.y + wall1.h;
     spamBoy.ySpeed = 0;
   } else if (spamBoy.x < wall1.x + wall1.w && spamBoy.x > wall1.x && spamBoy.y < wall1.y + wall1.h && spamBoy.y + spamBoy.h> wall1.y) {
@@ -323,12 +332,12 @@ function checkCollisions() {
     spamBoy.x = wall1.x - spamBoy.w;
   }
 
-  // wall2
-  if (spamBoy.y + spamBoy.h > wall2.y && spamBoy.y + spamBoy.h < wall2.y + wall2.h && spamBoy.x < wall2.x + wall2.w - 10 && spamBoy.x + spamBoy.w > wall2.x + 10) {
+  // Wall2
+  if (spamBoy.y + spamBoy.h > wall2.y && spamBoy.y + spamBoy.h < wall2.y + wall2.h && spamBoy.x < wall2.x + wall2.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > wall2.x + spamBoy.xSpeedMax) {
     spamBoy.y = wall2.y - spamBoy.h;
     spamBoy.canJump = true;
     spamBoy.ySpeed = 0;
-  } else if (spamBoy.y < wall2.y + wall2.h && spamBoy.y > wall2.y && spamBoy.x < wall2.x + wall2.w - 10 && spamBoy.x + spamBoy.w > wall2.x + 10) {
+  } else if (spamBoy.y < wall2.y + wall2.h && spamBoy.y > wall2.y && spamBoy.x < wall2.x + wall2.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > wall2.x + spamBoy.xSpeedMax) {
     spamBoy.y = wall2.y + wall2.h;
     spamBoy.ySpeed = 0;
   } else if (spamBoy.x < wall2.x + wall2.w && spamBoy.x > wall2.x && spamBoy.y < wall2.y + wall2.h && spamBoy.y + spamBoy.h> wall2.y) {
@@ -436,6 +445,7 @@ function loadLevelValues() {
       y2: 500,
       x3: 355,
       y3: 500,
+      xAdder: 50,
       r: 200,
       g: 0,
       b: 0
@@ -466,6 +476,7 @@ function loadLevelValues() {
       b: 155,
       xSpeed: 5,
       xAccel: 0.5,
+      xSpeedMax: 10,
       ySpeed: 0,
       yAccel: -0.5,
       jumpSpeed: 10,
