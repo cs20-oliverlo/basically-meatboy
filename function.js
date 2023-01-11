@@ -120,6 +120,18 @@ function drawLevel1() {
     }
 
     // Arrow
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = `rgb(${arrow.r}, ${arrow.g}, ${arrow.b})`;
+    ctx.beginPath();
+    ctx.moveTo(arrow.x1, arrow.y1);
+    ctx.lineTo(arrow.x2, arrow.y2);
+    ctx.lineTo(arrow.x3, arrow.y3);
+    ctx.lineTo(arrow.x4, arrow.y4);
+    ctx.lineTo(arrow.x5, arrow.y5);
+    ctx.lineTo(arrow.x6, arrow.y6);
+    ctx.lineTo(arrow.x7, arrow.y7);
+    ctx.lineTo(arrow.x1, arrow.y1);
+    ctx.stroke();
 
     // Spam Boy
     ctx.fillStyle = `rgb(${spamBoy.r}, ${spamBoy.g}, ${spamBoy.b})`;
@@ -436,6 +448,13 @@ function checkCollisions() {
   } else if (spike2.y3 > spamBoy.y && spike2.y3 < spamBoy.y + spamBoy.h && spamBoy.x < spike2.x3 + spike2.xAdder * (spike2.num - 1) && spamBoy.x + spamBoy.w > spike2.x2) {
     loadLevelValues();
   }
+
+  // Arrow
+  if (spamBoy.x > arrow.x4 && spamBoy.x < arrow.x1 && spamBoy.y < arrow.y7 && spamBoy.y + spamBoy.h > arrow.y2) {
+    console.log("good, it's working!");
+  } else if (spamBoy.x + spamBoy.w > arrow.x4 && spamBoy.x + spamBoy.w < arrow.x1 && spamBoy.y < arrow.y7 && spamBoy.y + spamBoy.h > arrow.y2) {
+    console.log("good, it's working!");
+  }
 }
 
 function loadLevelValues() {
@@ -547,9 +566,6 @@ function loadLevelValues() {
       g: 30,
       b: 30
     };
-    arrow = {
-      
-    };
     spike1 = {
       x1: 311,
       y1: 488,
@@ -575,6 +591,25 @@ function loadLevelValues() {
       r: 200,
       g: 0,
       b: 0
+    };
+    arrow = {
+      x1: 1040,
+      y1: 660,
+      x2: 1020,
+      y2: 640,
+      x3: 1020,
+      y3: 650,
+      x4: 985,
+      y4: 650,
+      x5: 985,
+      y5: 670,
+      x6: 1020,
+      y6: 670,
+      x7: 1020,
+      y7: 680,
+      r: 0,
+      g: 180,
+      b: 60
     };
     flag = {
       x1: 100,
