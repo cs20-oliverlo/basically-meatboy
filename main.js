@@ -13,11 +13,11 @@ let mouseIsPressed = false;
 let state;
 let mode;
 let lvl;
+let levelSection;
 let numLvls;
 let selector;
-let spamBoy;
 let KeyW, KeyS, KeyA, KeyD, Space, Enter;
-let background, border1, border2, border3, border4, floor1, floor2, wall1, wall2, wall3, wall4;
+let background, border1, border2, border3, border4, floor1, floor2, wall1, wall2, wall3, wall4, platform1, spike1, spike2, arrow, flag, spamBoy;
 reset();
 
 // Draw Function
