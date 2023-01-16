@@ -17,10 +17,7 @@ let levelSection;
 let numLvls;
 let selector;
 let KeyW, KeyS, KeyA, KeyD, Space, Enter;
-let background, border1, border2, border3, border4, floor1, floor2, wall1, wall2, wall3, wall4, platform1, spike1, spike2, arrow, flag, spamBoy;
-let borders = [];
-let blocks = [];
-let spikes = [];
+let background, borders = [], blocks = [], platforms = [], spikes = [], arrow, flag, spamBoy;
 reset();
 
 // Draw Function

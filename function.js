@@ -26,62 +26,27 @@ function drawLevel() {
   ctx.fillStyle = `rgb(${background.r}, ${background.g}, ${background.b})`;
   ctx.fillRect(0, 0, cnv.width, cnv.height);
 
-  // // Border1
-  // ctx.fillStyle = `rgb(${border1.r}, ${border1.g}, ${border1.b})`;
-  // ctx.fillRect(border1.x, border1.y, border1.w, border1.h);
-
-  // // Border2
-  // ctx.fillStyle = `rgb(${border2.r}, ${border2.g}, ${border2.b})`;
-  // ctx.fillRect(border2.x, border2.y, border2.w, border2.h);
-
-  // // Border3
-  // ctx.fillStyle = `rgb(${border3.r}, ${border3.g}, ${border3.b})`;
-  // ctx.fillRect(border3.x, border3.y, border3.w, border3.h);
-
-  // // Border4
-  // ctx.fillStyle = `rgb(${border4.r}, ${border4.g}, ${border4.b})`;
-  // ctx.fillRect(border4.x, border4.y, border4.w, border4.h);
-
+  // Borders
   for (let i = 0; i < borders.length; i++) {
     ctx.fillStyle = `rgb(${borders[i].r}, ${borders[i].g}, ${borders[i].b})`;
     ctx.fillRect(borders[i].x, borders[i].y, borders[i].w, borders[i].h);
   }
 
+  // Blocks
   for (let i = 0; i < blocks.length; i++) {
     ctx.fillStyle = `rgb(${blocks[i].r}, ${blocks[i].g}, ${blocks[i].b})`;
     ctx.fillRect(blocks[i].x, blocks[i].y, blocks[i].w, blocks[i].h);
   }
-  // // block1
-  // ctx.fillStyle = `rgb(${block1.r}, ${block1.g}, ${block1.b})`;
-  // ctx.fillRect(block1.x, block1.y, block1.w, block1.h);
 
-  // // block2
-  // ctx.fillStyle = `rgb(${block2.r}, ${block2.g}, ${block2.b})`;
-  // ctx.fillRect(block2.x, block2.y, block2.w, block2.h);
-  
-  // // block3
-  // ctx.fillStyle = `rgb(${block3.r}, ${block3.g}, ${block3.b})`;
-  // ctx.fillRect(block3.x, block3.y, block3.w, block3.h);
+  // Platforms
+  for (let i = 0; i < platforms.length; i++) {
+    ctx.fillStyle = `rgb(${platforms[i].r}, ${platforms[i].g}, ${platforms[i].b})`;
+    ctx.fillRect(platforms[i].x, platforms[i].y, platforms[i].w, platforms[i].h);
+    platforms[i].x += platforms[i].xMove;
 
-  // // block4
-  // ctx.fillStyle = `rgb(${block4.r}, ${block4.g}, ${block4.b})`;
-  // ctx.fillRect(block4.x, block4.y, block4.w, block4.h);
-
-  // // block5
-  // ctx.fillStyle = `rgb(${block5.r}, ${block5.g}, ${block5.b})`;
-  // ctx.fillRect(block5.x, block5.y, block5.w, block5.h);
-
-  // // block6
-  // ctx.fillStyle = `rgb(${block6.r}, ${block6.g}, ${block6.b})`;
-  // ctx.fillRect(block6.x, block6.y, block6.w, block6.h);
-
-  // Platform1
-  ctx.fillStyle = `rgb(${platform1.r}, ${platform1.g}, ${platform1.b})`;
-  ctx.fillRect(platform1.x, platform1.y, platform1.w, platform1.h);
-  platform1.x += platform1.xMove;
-
-  if (platform1.x < platform1.xMin || platform1.x > platform1.xMax) {
-    platform1.xMove *= -1;
+    if (platforms[i].x < platforms[i].xMin || platforms[i].x > platforms[i].xMax) {
+      platforms[i].xMove *= -1;
+    }
   }
 
   // Spike1
@@ -90,7 +55,7 @@ function drawLevel() {
     spikes[i].x2Sum = spikes[i].x2;
     spikes[i].x3Sum = spikes[i].x3;
   
-    for (let i = 0; i < spikes[i].num; i++) {
+    for (let n = 0; n < spikes[i].num; n++) {
       ctx.fillStyle = `rgb(${spikes[i].r}, ${spikes[i].g}, ${spikes[i].b})`;
       ctx.beginPath();
       ctx.moveTo(spikes[i].x1Sum, spikes[i].y1);
@@ -102,38 +67,11 @@ function drawLevel() {
       spikes[i].x3Sum += spikes[i].xAdder;
     }
   }
-  // spike1.x1Sum = spike1.x1;
-  // spike1.x2Sum = spike1.x2;
-  // spike1.x3Sum = spike1.x3;
 
-  // for (let i = 0; i < spike1.num; i++) {
-  //   ctx.fillStyle = `rgb(${spike1.r}, ${spike1.g}, ${spike1.b})`;
-  //   ctx.beginPath();
-  //   ctx.moveTo(spike1.x1Sum, spike1.y1);
-  //   ctx.lineTo(spike1.x2Sum, spike1.y2);
-  //   ctx.lineTo(spike1.x3Sum, spike1.y3);
-  //   ctx.fill()
-  //   spike1.x1Sum += spike1.xAdder;
-  //   spike1.x2Sum += spike1.xAdder;
-  //   spike1.x3Sum += spike1.xAdder;
-  // }
-
-  // // Spike2
-  // spike2.x1Sum = spike2.x1;
-  // spike2.x2Sum = spike2.x2;
-  // spike2.x3Sum = spike2.x3;
-
-  // for (let i = 0; i < spike2.num; i++) {
-  //   ctx.fillStyle = `rgb(${spike2.r}, ${spike2.g}, ${spike2.b})`;
-  //   ctx.beginPath();
-  //   ctx.moveTo(spike2.x1Sum, spike2.y1);
-  //   ctx.lineTo(spike2.x2Sum, spike2.y2);
-  //   ctx.lineTo(spike2.x3Sum, spike2.y3);
-  //   ctx.fill()
-  //   spike2.x1Sum += spike2.xAdder;
-  //   spike2.x2Sum += spike2.xAdder;
-  //   spike2.x3Sum += spike2.xAdder;
-  // }
+  for (let i = 0; i < walljumps.length; i++) {
+    ctx.fillStyle = `rgb(${walljumps[i].r}, ${walljumps[i].g}, ${walljumps[i].b})`;
+    ctx.fillRect(walljumps[i].x, walljumps[i].y, walljumps[i].w, walljumps[i].h);
+  }
 
   // Arrow
   ctx.lineWidth = 3;
@@ -250,6 +188,9 @@ function gamingControls() {
 
   // Move Spam Boy y
   spamBoy.y += spamBoy.ySpeed;
+
+  // Jumping
+  spamBoy.canJump = false;
 }
 
 function lvlSelectControls() {
@@ -285,13 +226,13 @@ function lvlSelectControls() {
   
   if (Space === true) {
     if (selector.x === cnv.width * 1 / (numLvls + 1)) {
-      lvl = "lvl1";
+      lvl = 0;
     } else if (selector.x === cnv.width * 2 / (numLvls + 1)) {
-      lvl = "lvl2";
+      lvl = 1;
     } else if (selector.x === cnv.width * 3 / (numLvls + 1)) {
-      lvl = "lvl3";
+      lvl = 2;
     } else {
-      lvl = "lvl4";
+      lvl = 3;
     }
 
     levelSection = 0;
@@ -302,13 +243,13 @@ function lvlSelectControls() {
   
   if (Enter === true) {
     if (selector.x === cnv.width * 1 / (numLvls + 1)) {
-      lvl = "lvl1";
+      lvl = 0;
     } else if (selector.x === cnv.width * 2 / (numLvls + 1)) {
-      lvl = "lvl2";
+      lvl = 1;
     } else if (selector.x === cnv.width * 3 / (numLvls + 1)) {
-      lvl = "lvl3";
+      lvl = 2;
     } else {
-      lvl = "lvl4";
+      lvl = 3;
     }
 
     levelSection = 0;
@@ -319,153 +260,76 @@ function lvlSelectControls() {
 }
 
 function checkCollisions() {
-  // // Borders
-  // if (spamBoy.x < border3.x + border3.w) {
-  //   spamBoy.x = border3.x + border3.w;
-  // }
+  // Borders
+  for (let i = 0; i < borders.length; i++) {
+    if (spamBoy.y + spamBoy.h > borders[i].y && spamBoy.y + spamBoy.h < borders[i].y + borders[i].h && spamBoy.x < borders[i].x + borders[i].w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > borders[i].x + spamBoy.xSpeedMax) {
+      spamBoy.y = borders[i].y - spamBoy.h;
+      spamBoy.canJump = true;
+      spamBoy.ySpeed = 0;
+    } else if (spamBoy.y < borders[i].y + borders[i].h && spamBoy.y > borders[i].y && spamBoy.x < borders[i].x + borders[i].w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > borders[i].x + spamBoy.xSpeedMax) {
+      spamBoy.y = borders[i].y + borders[i].h;
+      spamBoy.ySpeed = 0;
+    } else if (spamBoy.x < borders[i].x + borders[i].w && spamBoy.x > borders[i].x && spamBoy.y < borders[i].y + borders[i].h && spamBoy.y + spamBoy.h > borders[i].y) {
+      spamBoy.x = borders[i].x + borders[i].w;
+    } else if (spamBoy.x + spamBoy.w > borders[i].x && spamBoy.x + spamBoy.w < borders[i].x + borders[i].w &&spamBoy.y < borders[i].y + borders[i].h && spamBoy.y + spamBoy.h > borders[i].y) {
+      spamBoy.x = borders[i].x - spamBoy.w;
+    }
+  }
 
-  // if (spamBoy.x + spamBoy.w > border4.x) {
-  //   spamBoy.x = border4.x - spamBoy.w;
-  // }
+  // Blocks
+  for (let i = 0; i < blocks.length; i++) {
+    if (spamBoy.y + spamBoy.h > blocks[i].y && spamBoy.y + spamBoy.h < blocks[i].y + blocks[i].h && spamBoy.x < blocks[i].x + blocks[i].w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > blocks[i].x + spamBoy.xSpeedMax) {
+      spamBoy.y = blocks[i].y - spamBoy.h;
+      spamBoy.canJump = true;
+      spamBoy.ySpeed = 0;
+    } else if (spamBoy.y < blocks[i].y + blocks[i].h && spamBoy.y > blocks[i].y && spamBoy.x < blocks[i].x + blocks[i].w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > blocks[i].x + spamBoy.xSpeedMax) {
+      spamBoy.y = blocks[i].y + blocks[i].h;
+      spamBoy.ySpeed = 0;
+    } else if (spamBoy.x < blocks[i].x + blocks[i].w && spamBoy.x > blocks[i].x && spamBoy.y < blocks[i].y + blocks[i].h && spamBoy.y + spamBoy.h > blocks[i].y) {
+      spamBoy.x = blocks[i].x + blocks[i].w;
+    } else if (spamBoy.x + spamBoy.w > blocks[i].x && spamBoy.x + spamBoy.w < blocks[i].x + blocks[i].w &&spamBoy.y < blocks[i].y + blocks[i].h && spamBoy.y + spamBoy.h > blocks[i].y) {
+      spamBoy.x = blocks[i].x - spamBoy.w;
+    }
+  }
 
-  // if (spamBoy.y < border1.y + border1.h) {
-  //   spamBoy.y = border1.y + border1.h;
-  //   spamBoy.ySpeed = 0;
-  // }
+  // Platforms
+  for (let i = 0; i < platforms.length; i++) {
+    if (spamBoy.y + spamBoy.h > platforms[i].y && spamBoy.y + spamBoy.h < platforms[i].y + platforms[i].h && spamBoy.x < platforms[i].x + platforms[i].w - spamBoy.xSpeedMax - 1 && spamBoy.x + spamBoy.w > platforms[i].x + spamBoy.xSpeedMax + 1) {
+      spamBoy.y = platforms[i].y - spamBoy.h;
+      spamBoy.canJump = true;
+      spamBoy.ySpeed = 0;
+      spamBoy.x += platforms[i].xMove;
+    } else if (spamBoy.y < platforms[i].y + platforms[i].h && spamBoy.y > platforms[i].y && spamBoy.x < platforms[i].x + platforms[i].w - spamBoy.xSpeedMax - 1 && spamBoy.x + spamBoy.w > platforms[i].x + spamBoy.xSpeedMax + 1) {
+      spamBoy.y = platforms[i].y + platforms[i].h;
+      spamBoy.ySpeed = 0;
+    } else if (spamBoy.x < platforms[i].x + platforms[i].w && spamBoy.x > platforms[i].x && spamBoy.y < platforms[i].y + platforms[i].h && spamBoy.y + spamBoy.h > platforms[i].y) {
+      spamBoy.x = platforms[i].x + platforms[i].w;
+    } else if (spamBoy.x + spamBoy.w > platforms[i].x && spamBoy.x + spamBoy.w < platforms[i].x + platforms[i].w &&spamBoy.y < platforms[i].y + platforms[i].h && spamBoy.y + spamBoy.h > platforms[i].y) {
+      spamBoy.x = platforms[i].x - spamBoy.w;
+    }
+  }
 
-  // if (spamBoy.y + spamBoy.h > border2.y) {
-  //   spamBoy.y = border2.y - spamBoy.h;
-  //   spamBoy.canJump = true;
-  //   spamBoy.ySpeed = 0;
-  // } else {
-  //   spamBoy.canJump = false;
-  // }
+  // Spikes
+  for (let i = 0; i < spikes.length; i++) {
+    if (spikes[i].y1 > spamBoy.y && spikes[i].y1 < spamBoy.y + spamBoy.h && spamBoy.x < spikes[i].x3 + spikes[i].xAdder * (spikes[i].num - 1) && spamBoy.x + spamBoy.w > spikes[i].x2) {
+      loadLevelValues();
+    } else if (spikes[i].y3 > spamBoy.y && spikes[i].y3 < spamBoy.y + spamBoy.h && spamBoy.x < spikes[i].x3 + spikes[i].xAdder * (spikes[i].num - 1) && spamBoy.x + spamBoy.w > spikes[i].x2) {
+      loadLevelValues();
+    }
+  }
 
-  // // block1
-  // if (spamBoy.y + spamBoy.h > block1.y && spamBoy.y + spamBoy.h < block1.y + block1.h && spamBoy.x < block1.x + block1.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block1.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block1.y - spamBoy.h;
-  //   spamBoy.canJump = true;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.y < block1.y + block1.h && spamBoy.y > block1.y && spamBoy.x < block1.x + block1.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block1.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block1.y + block1.h;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.x < block1.x + block1.w && spamBoy.x > block1.x && spamBoy.y < block1.y + block1.h && spamBoy.y + spamBoy.h > block1.y) {
-  //   spamBoy.x = block1.x + block1.w;
-  // } else if (spamBoy.x + spamBoy.w > block1.x && spamBoy.x + spamBoy.w < block1.x + block1.w &&spamBoy.y < block1.y + block1.h && spamBoy.y + spamBoy.h > block1.y) {
-  //   spamBoy.x = block1.x - spamBoy.w;
-  // }
-
-  // // block2
-  // if (spamBoy.y + spamBoy.h > block2.y && spamBoy.y + spamBoy.h < block2.y + block2.h && spamBoy.x < block2.x + block2.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block2.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block2.y - spamBoy.h;
-  //   spamBoy.canJump = true;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.y < block2.y + block2.h && spamBoy.y > block2.y && spamBoy.x < block2.x + block2.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block2.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block2.y + block2.h;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.x < block2.x + block2.w && spamBoy.x > block2.x && spamBoy.y < block2.y + block2.h && spamBoy.y + spamBoy.h > block2.y) {
-  //   spamBoy.x = block2.x + block2.w;
-  // } else if (spamBoy.x + spamBoy.w > block2.x && spamBoy.x + spamBoy.w < block2.x + block2.w &&spamBoy.y < block2.y + block2.h && spamBoy.y + spamBoy.h > block2.y) {
-  //   spamBoy.x = block2.x - spamBoy.w;
-  // }
-
-  // // block3
-  // if (spamBoy.y + spamBoy.h > block3.y && spamBoy.y + spamBoy.h < block3.y + block3.h && spamBoy.x < block3.x + block3.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block3.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block3.y - spamBoy.h;
-  //   spamBoy.canJump = true;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.y < block3.y + block3.h && spamBoy.y > block3.y && spamBoy.x < block3.x + block3.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block3.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block3.y + block3.h;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.x < block3.x + block3.w && spamBoy.x > block3.x && spamBoy.y < block3.y + block3.h && spamBoy.y + spamBoy.h > block3.y) {
-  //   spamBoy.x = block3.x + block3.w;
-  // } else if (spamBoy.x + spamBoy.w > block3.x && spamBoy.x + spamBoy.w < block3.x + block3.w &&spamBoy.y < block3.y + block3.h && spamBoy.y + spamBoy.h > block3.y) {
-  //   spamBoy.x = block3.x - spamBoy.w;
-  // }
-
-  // // block4
-  // if (spamBoy.y + spamBoy.h > block4.y && spamBoy.y + spamBoy.h < block4.y + block4.h && spamBoy.x < block4.x + block4.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block4.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block4.y - spamBoy.h;
-  //   spamBoy.canJump = true;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.y < block4.y + block4.h && spamBoy.y > block4.y && spamBoy.x < block4.x + block4.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block4.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block4.y + block4.h;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.x < block4.x + block4.w && spamBoy.x > block4.x && spamBoy.y < block4.y + block4.h && spamBoy.y + spamBoy.h > block4.y) {
-  //   spamBoy.x = block4.x + block4.w;
-  // } else if (spamBoy.x + spamBoy.w > block4.x && spamBoy.x + spamBoy.w < block4.x + block4.w &&spamBoy.y < block4.y + block4.h && spamBoy.y + spamBoy.h > block4.y) {
-  //   spamBoy.x = block4.x - spamBoy.w;
-  // }
-
-  // // block5
-  // if (spamBoy.y + spamBoy.h > block5.y && spamBoy.y + spamBoy.h < block5.y + block5.h && spamBoy.x < block5.x + block5.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block5.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block5.y - spamBoy.h;
-  //   spamBoy.canJump = true;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.y < block5.y + block5.h && spamBoy.y > block5.y && spamBoy.x < block5.x + block5.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block5.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block5.y + block5.h;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.x < block5.x + block5.w && spamBoy.x > block5.x && spamBoy.y < block5.y + block5.h && spamBoy.y + spamBoy.h > block5.y) {
-  //   spamBoy.x = block5.x + block5.w;
-  // } else if (spamBoy.x + spamBoy.w > block5.x && spamBoy.x + spamBoy.w < block5.x + block5.w &&spamBoy.y < block5.y + block5.h && spamBoy.y + spamBoy.h > block5.y) {
-  //   spamBoy.x = block5.x - spamBoy.w;
-  // }
-
-  // // block6
-  // if (spamBoy.y + spamBoy.h > block6.y && spamBoy.y + spamBoy.h < block6.y + block6.h && spamBoy.x < block6.x + block6.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block6.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block6.y - spamBoy.h;
-  //   spamBoy.canJump = true;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.y < block6.y + block6.h && spamBoy.y > block6.y && spamBoy.x < block6.x + block6.w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > block6.x + spamBoy.xSpeedMax) {
-  //   spamBoy.y = block6.y + block6.h;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.x < block6.x + block6.w && spamBoy.x > block6.x && spamBoy.y < block6.y + block6.h && spamBoy.y + spamBoy.h > block6.y) {
-  //   spamBoy.x = block6.x + block6.w;
-  // } else if (spamBoy.x + spamBoy.w > block6.x && spamBoy.x + spamBoy.w < block6.x + block6.w &&spamBoy.y < block6.y + block6.h && spamBoy.y + spamBoy.h > block6.y) {
-  //   spamBoy.x = block6.x - spamBoy.w;
-  // }
-
-  // // Platform1
-  //   if (spamBoy.y + spamBoy.h > platform1.y && spamBoy.y + spamBoy.h < platform1.y + platform1.h && spamBoy.x < platform1.x + platform1.w - spamBoy.xSpeedMax - 1 && spamBoy.x + spamBoy.w > platform1.x + spamBoy.xSpeedMax + 1) {
-  //   spamBoy.y = platform1.y - spamBoy.h;
-  //   spamBoy.canJump = true;
-  //   spamBoy.ySpeed = 0;
-  //   spamBoy.x += platform1.xMove;
-  // } else if (spamBoy.y < platform1.y + platform1.h && spamBoy.y > platform1.y && spamBoy.x < platform1.x + platform1.w - spamBoy.xSpeedMax - 1 && spamBoy.x + spamBoy.w > platform1.x + spamBoy.xSpeedMax + 1) {
-  //   spamBoy.y = platform1.y + platform1.h;
-  //   spamBoy.ySpeed = 0;
-  // } else if (spamBoy.x < platform1.x + platform1.w && spamBoy.x > platform1.x && spamBoy.y < platform1.y + platform1.h && spamBoy.y + spamBoy.h > platform1.y) {
-  //   spamBoy.x = platform1.x + platform1.w;
-  // } else if (spamBoy.x + spamBoy.w > platform1.x && spamBoy.x + spamBoy.w < platform1.x + platform1.w &&spamBoy.y < platform1.y + platform1.h && spamBoy.y + spamBoy.h > platform1.y) {
-  //   spamBoy.x = platform1.x - spamBoy.w;
-  // }
-
-  // // Spike1
-  // if (spike1.y1 > spamBoy.y && spike1.y1 < spamBoy.y + spamBoy.h && spamBoy.x < spike1.x3 + spike1.xAdder * (spike1.num - 1) && spamBoy.x + spamBoy.w > spike1.x2) {
-  //   loadLevelValues();
-  // } else if (spike1.y3 > spamBoy.y && spike1.y3 < spamBoy.y + spamBoy.h && spamBoy.x < spike1.x3 + spike1.xAdder * (spike1.num - 1) && spamBoy.x + spamBoy.w > spike1.x2) {
-  //   loadLevelValues();
-  // }
-  
-  // // Spike2
-  // if (spike2.y1 > spamBoy.y && spike2.y1 < spamBoy.y + spamBoy.h && spamBoy.x < spike2.x3 + spike2.xAdder * (spike2.num - 1) && spamBoy.x + spamBoy.w > spike2.x2) {
-  //   loadLevelValues();
-  // } else if (spike2.y3 > spamBoy.y && spike2.y3 < spamBoy.y + spamBoy.h && spamBoy.x < spike2.x3 + spike2.xAdder * (spike2.num - 1) && spamBoy.x + spamBoy.w > spike2.x2) {
-  //   loadLevelValues();
-  // }
-
-  // // Arrow
-  // if (spamBoy.x > arrow.x4 && spamBoy.x < arrow.x1 && spamBoy.y < arrow.y7 && spamBoy.y + spamBoy.h > arrow.y2) {
-  //   levelSection++;
-  //   loadLevelValues();
-  // } else if (spamBoy.x + spamBoy.w > arrow.x4 && spamBoy.x + spamBoy.w < arrow.x1 && spamBoy.y < arrow.y7 && spamBoy.y + spamBoy.h > arrow.y2) {
-  //   levelSection++;
-  //   loadLevelValues();
-  // }
+  // Arrow
+  if (spamBoy.x > arrow.x4 && spamBoy.x < arrow.x1 && spamBoy.y < arrow.y7 && spamBoy.y + spamBoy.h > arrow.y2) {
+    levelSection++;
+    loadLevelValues();
+  } else if (spamBoy.x + spamBoy.w > arrow.x4 && spamBoy.x + spamBoy.w < arrow.x1 && spamBoy.y < arrow.y7 && spamBoy.y + spamBoy.h > arrow.y2) {
+    levelSection++;
+    loadLevelValues();
+  }
 }
 
 function loadLevelValues() {
-  if (lvl === "lvl1") {
+  if (lvl === 0) {
     if (levelSection === 0) {
       background = {
         r: 54,
@@ -566,7 +430,8 @@ function loadLevelValues() {
           b: 30
         }
       ];
-      platform1 = {
+      platforms = [
+        {
         x: 300,
         y: 650,
         w: 100,
@@ -577,7 +442,8 @@ function loadLevelValues() {
         r: 30,
         g: 30,
         b: 30
-      };
+        }
+      ]
       spikes = [
         {
           x1: 311,
@@ -602,6 +468,17 @@ function loadLevelValues() {
           xAdder: 12.5,
           num: 30,
           r: 200,
+          g: 0,
+          b: 0
+        }
+      ];
+      walljumps = [
+        {
+          x: 0,
+          y: 0,
+          w: 0,
+          h: 0,
+          r: 0,
           g: 0,
           b: 0
         }
@@ -749,141 +626,75 @@ function loadLevelValues() {
         {
           x: 850,
           y: 225,
-          w: 105,
+          w: 205,
           h: 45,
           r: 30,
           g: 30,
           b: 30
         }
       ];
-      // border1 = {
-      //   x: 0,
-      //   y: 0,
-      //   w: 1080,
-      //   h: 25,
-      //   r: 10,
-      //   g: 10,
-      //   b: 10
-      // };
-      // border2 = {
-      //   x: 0,
-      //   y: 695,
-      //   w: 1080,
-      //   h: 25,
-      //   r: 10,
-      //   g: 10,
-      //   b: 10
-      // };
-      // border3 = {
-      //   x: 0,
-      //   y: 0,
-      //   w: 25,
-      //   h: 720,
-      //   r: 10,
-      //   g: 10,
-      //   b: 10
-      // };
-      // border4 = {
-      //   x: 1055,
-      //   y: 0,
-      //   w: 25,
-      //   h: 720,
-      //   r: 10,
-      //   g: 10,
-      //   b: 10
-      // };
-      // block1 = {
-      //   x: 25,
-      //   y: 200,
-      //   w: 100,
-      //   h: 495,
-      //   r: 30,
-      //   g: 30,
-      //   b: 30
-      // };
-      // block2 = {
-      //   x: 550,
-      //   y: 400,
-      //   w: 156,
-      //   h: 295,
-      //   r: 30,
-      //   g: 30,
-      //   b: 30
-      // };
-      // block3 = {
-      //   x: 255,
-      //   y: 25,
-      //   w: 50,
-      //   h: 500,
-      //   r: 30,
-      //   g: 30,
-      //   b: 30
-      // };
-      // block4 = {
-      //   x: 850,
-      //   y: 225,
-      //   w: 50,
-      //   h: 167,
-      //   r: 30,
-      //   g: 30,
-      //   b: 30
-      // };
-      // block5 = {
-      //   x: 725,
-      //   y: 25,
-      //   w: 50,
-      //   h: 250,
-      //   r: 30,
-      //   g: 30,
-      //   b: 30
-      // };
-      // block6 = {
-      //   x: 850,
-      //   y: 225,
-      //   w: 105,
-      //   h: 45,
-      //   r: 30,
-      //   g: 30,
-      //   b: 30
-      // };
-      platform1 = {
-        x: 350,
-        y: 650,
-        w: 50,
-        h: 10,
-        xMove: 0,
-        xMin: 0,
-        xMax: 0,
-        r: 30,
-        g: 30,
-        b: 30
-      };
-      spike1 = {
-        x1: 131,
-        y1: 683,
-        x2: 125,
-        y2: 695,
-        x3: 137,
-        y3: 695,
-        xAdder: 12.5,
-        num: 34,
-        r: 200,
-        g: 0,
-        b: 0
-      };
-      spike2 = {
-        x1: 712,
-        y1: 683,
-        x2: 706,
-        y2: 695,
-        x3: 718,
-        y3: 695,
-        xAdder: 12.5,
-        num: 28,
-        r: 200,
-        g: 0,
-        b: 0
-      };
+      platforms = [
+        {
+          x: 350,
+          y: 650,
+          w: 50,
+          h: 10,
+          xMove: 0,
+          xMin: 0,
+          xMax: 0,
+          r: 30,
+          g: 30,
+          b: 30
+        }
+      ];
+      spikes = [
+        {
+          x1: 131,
+          y1: 683,
+          x2: 125,
+          y2: 695,
+          x3: 137,
+          y3: 695,
+          xAdder: 12.5,
+          num: 34,
+          r: 200,
+          g: 0,
+          b: 0
+        },
+        {
+          x1: 712,
+          y1: 683,
+          x2: 706,
+          y2: 695,
+          x3: 718,
+          y3: 695,
+          xAdder: 12.5,
+          num: 28,
+          r: 200,
+          g: 0,
+          b: 0
+        }
+      ];
+      walljumps = [
+        {
+          x: 100,
+          y: 100,
+          w: 50,
+          h: 75,
+          r: 100,
+          g: 0,
+          b: 255
+        },
+        {
+          x: 100,
+          y: 100,
+          w: 50,
+          h: 75,
+          r: 100,
+          g: 0,
+          b: 255
+        }
+      ];
       arrow = {
         x1: 0,
         y1: 0,
@@ -935,9 +746,9 @@ function loadLevelValues() {
         canJump: false
       };
     }
-  } else if (lvl === "lvl2") {
+  } else if (lvl === 1) {
 
-  } else if (lvl === "lvl3") {
+  } else if (lvl === 2) {
 
   } else {
 
@@ -947,7 +758,7 @@ function loadLevelValues() {
 function reset() {
   state = "start";
   mode = "lvlSelect";
-  lvl = "lvl1";
+  lvl = 0;
   numLvls = 4;
   selector = {
     x: cnv.width / (numLvls + 1),
