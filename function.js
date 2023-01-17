@@ -68,10 +68,19 @@ function drawLevel() {
     }
   }
 
-  for (let i = 0; i < walljumps.length; i++) {
-    ctx.fillStyle = `rgb(${walljumps[i].r}, ${walljumps[i].g}, ${walljumps[i].b})`;
-    ctx.fillRect(walljumps[i].x, walljumps[i].y, walljumps[i].w, walljumps[i].h);
+  // Wall Jumps
+  for (let i = 0; i < wallJumps.length; i++) {
+    ctx.fillStyle = `rgb(${wallJumps[i].r}, ${wallJumps[i].g}, ${wallJumps[i].b})`;
+    ctx.fillRect(wallJumps[i].x, wallJumps[i].y, wallJumps[i].w, wallJumps[i].h);
   }
+
+  // // Bounce Pads
+  // for (let i = 0; i < bouncePads.length; i++) {
+  //   ctx.fillStyle = `rgb(${bouncePads[i].r}, ${bouncePads[i].g}, ${bouncePads[i].b})`;
+  //   ctx.beginPath();
+  //   ctx.arc(bouncePads[i].x, bouncePads[i].y, bouncePads[i].rad, bouncePads[i].angleStart, bouncePads[i].angleEnd);
+  //   ctx.fill();
+  // }
 
   // Arrow
   ctx.lineWidth = 3;
@@ -155,6 +164,8 @@ function gamingControls() {
   if (Space === true) {
     if (spamBoy.canJump === true) {
       spamBoy.ySpeed -= spamBoy.jumpSpeed;
+    } else if (spamBoy.onWall === true) {
+      spamBoy.ySpeed -= spamBoy.wallJumpSpeed;
     }
   }
   
@@ -191,6 +202,7 @@ function gamingControls() {
 
   // Jumping
   spamBoy.canJump = false;
+  spamBoy.onWall = false;
 }
 
 function lvlSelectControls() {
@@ -315,6 +327,23 @@ function checkCollisions() {
       loadLevelValues();
     } else if (spikes[i].y3 > spamBoy.y && spikes[i].y3 < spamBoy.y + spamBoy.h && spamBoy.x < spikes[i].x3 + spikes[i].xAdder * (spikes[i].num - 1) && spamBoy.x + spamBoy.w > spikes[i].x2) {
       loadLevelValues();
+    }
+  }
+
+  // Wall Jumps
+  for (let i = 0; i < wallJumps.length; i++) {
+    if (spamBoy.y + spamBoy.h > wallJumps[i].y && spamBoy.y + spamBoy.h < wallJumps[i].y + wallJumps[i].h && spamBoy.x < wallJumps[i].x + wallJumps[i].w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > wallJumps[i].x + spamBoy.xSpeedMax) {
+      // top
+      spamBoy.onWall = true;
+    } else if (spamBoy.y < wallJumps[i].y + wallJumps[i].h && spamBoy.y > wallJumps[i].y && spamBoy.x < wallJumps[i].x + wallJumps[i].w - spamBoy.xSpeedMax && spamBoy.x + spamBoy.w > wallJumps[i].x + spamBoy.xSpeedMax) {
+      // bottom
+      spamBoy.onWall = true;
+    } else if (spamBoy.x < wallJumps[i].x + wallJumps[i].w && spamBoy.x > wallJumps[i].x && spamBoy.y < wallJumps[i].y + wallJumps[i].h && spamBoy.y + spamBoy.h > wallJumps[i].y) {
+      // left
+      spamBoy.onWall = true;
+    } else if (spamBoy.x + spamBoy.w > wallJumps[i].x && spamBoy.x + spamBoy.w < wallJumps[i].x + wallJumps[i].w &&spamBoy.y < wallJumps[i].y + wallJumps[i].h && spamBoy.y + spamBoy.h > wallJumps[i].y) {
+      // right
+      spamBoy.onWall = true;
     }
   }
 
@@ -472,12 +501,24 @@ function loadLevelValues() {
           b: 0
         }
       ];
-      walljumps = [
+      wallJumps = [
         {
           x: 0,
           y: 0,
           w: 0,
           h: 0,
+          r: 0,
+          g: 0,
+          b: 0
+        }
+      ];
+      bouncePads = [
+        {
+          x: 0,
+          y: 0,
+          rad: 0,
+          angleStart: 0,
+          angleEnd: 0,
           r: 0,
           g: 0,
           b: 0
@@ -531,7 +572,9 @@ function loadLevelValues() {
         ySpeed: 0,
         yAccel: -0.5,
         jumpSpeed: 10,
-        canJump: false
+        canJump: false,
+        wallJumpSpeed: 5,
+        onWall: false
       };
     } else if (levelSection === 1) {
       background = {
@@ -607,9 +650,9 @@ function loadLevelValues() {
         },
         {
           x: 850,
-          y: 225,
+          y: 225.5,
           w: 50,
-          h: 167,
+          h: 164.5,
           r: 30,
           g: 30,
           b: 30
@@ -675,24 +718,36 @@ function loadLevelValues() {
           b: 0
         }
       ];
-      walljumps = [
+      wallJumps = [
         {
-          x: 100,
-          y: 100,
-          w: 50,
-          h: 75,
+          x: 771,
+          y: 125,
+          w: 5,
+          h: 150,
           r: 100,
           g: 0,
           b: 255
         },
         {
-          x: 100,
-          y: 100,
-          w: 50,
-          h: 75,
+          x: 849,
+          y: 225,
+          w: 5,
+          h: 165,
           r: 100,
           g: 0,
           b: 255
+        }
+      ];
+      bouncePads = [
+        {
+          x: 100,
+          y: 100,
+          rad: 50,
+          angleStart: 1,
+          angleEnd: 2 * Math.PI,
+          r: 0,
+          g: 55,
+          b: 55
         }
       ];
       arrow = {
@@ -743,7 +798,9 @@ function loadLevelValues() {
         ySpeed: 0,
         yAccel: -0.5,
         jumpSpeed: 10,
-        canJump: false
+        canJump: false,
+        wallJumpSpeed: 5,
+        onWall: false
       };
     }
   } else if (lvl === 1) {
