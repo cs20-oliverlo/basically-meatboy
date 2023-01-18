@@ -357,6 +357,8 @@ function checkCollisions() {
   }
 }
 
+// Credit to Jusin to teaching me arrays
+
 function loadLevelValues() {
   if (lvl === 0) {
     if (levelSection === 0) {

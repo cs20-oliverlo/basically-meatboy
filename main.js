@@ -17,7 +17,7 @@ let levelSection;
 let numLvls;
 let selector;
 let KeyW, KeyS, KeyA, KeyD, Space, Enter;
-let background, borders = [], blocks = [], platforms = [], spikes = [], arrow, flag, spamBoy;
+let background, borders = [], blocks = [], platforms = [], spikes = [], wallJumps = [], bouncePads = [], arrow, flag, spamBoy;
 reset();
 
 // Draw Function
